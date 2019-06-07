@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  sql.data:
+    image: microsoft/mssql-server-windows-express
+
+  dcokersample:
+    image: ${DOCKER_REGISTRY-}dcokersample
+    build:
+      context: .
+      dockerfile: dcokerSample\Dockerfile
+    depends_on:
+      - "sql.data"
+
+networks:
+  default:
+    external:
+      name: nat

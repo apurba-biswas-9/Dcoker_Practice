@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  sql.data:
+    environment:
+      - SA_PASSWORD=MyPassword001
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"   
+
+  dcokersample:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development    
+      #- ConnectionString=Server=sql.data;Database=MyDB; User=sa;Password=MyPassword001;
+      #- ConnectionString=Server=sql.data;Database=MyDB;Integrated Security=False;User ID=sa;Password=MyPassword001
+      - ConnectionString=Server=sql.data,1433;Initial Catalog=MyDB;Persist Security Info=False;User ID=sa;Password=MyPassword001;MultipleActiveResultSets=False;Connection Timeout=30
+    ports:
+      - "5105:80"
+
+networks:
+  default:
+    external:
+      name: nat
